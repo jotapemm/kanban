@@ -7,7 +7,7 @@ class BoardManager {
         this.themeToggle = document.getElementById('theme-toggle');
         this.logoutBtn = document.getElementById('logout-btn');
         
-        ThemeManager.init();
+        ThemeManager.init(); // Inicializa o tema
         this.init();
     }
 
@@ -147,7 +147,7 @@ class BoardManager {
             <div class="board-card new-board">
                 <div class="add-board-content">
                     <i class="fas fa-plus-circle"></i>
-                    <p>Criar nova board</p>
+                    <p>Criar novo quadro</p>
                 </div>
                 <div class="hover-effect"></div>
             </div>
@@ -164,7 +164,7 @@ class BoardManager {
         const form = document.createElement('form');
         form.classList.add('modal-content');
         form.innerHTML = `
-            <h2>Nova Board</h2>
+            <h2>Novo Quadro</h2>
             
             <div class="form-group">
                 <label class="form-label" for="name">Nome do Quadro</label>
@@ -269,11 +269,11 @@ class BoardManager {
     }
 
     showSuccess(message) {
-        alert(message); // Você pode implementar um toast mais elegante aqui
+        alert(message);
     }
 
     showError(message) {
-        alert(message); // Você pode implementar um toast mais elegante aqui
+        alert(message);
     }
 
     async loadBoards() {
@@ -300,12 +300,25 @@ class BoardManager {
     createBoardElement(board) {
         const boardElement = document.createElement('div');
         boardElement.classList.add('board-item');
+        
+        const isRecent = new Date(board.UpdatedOn || board.CreatedOn) > new Date(Date.now() - 24*60*60*1000);
+        
         boardElement.innerHTML = `
-            <div class="board-card" data-board-id="${board.Id}" style="background-color: ${board.HexaBackgroundColor || '#ffffff'}">
-                <div class="board-header">
-                    <h3 class="board-title">${board.Name}</h3>
+            <div class="board-card" data-board-id="${board.Id}">
+                <div class="board-badges">
+                    ${board.IsActive ? '<span class="badge badge-active">Ativo</span>' : ''}
+                    ${isRecent ? '<span class="badge badge-recent">Recente</span>' : ''}
                 </div>
-                <p class="board-description">${board.Description || 'Sem descrição'}</p>
+                <div class="board-content">
+                    <div class="board-header">
+                        <h3 class="board-title">${board.Name}</h3>
+                        <span class="board-date">
+                            <i class="far fa-clock"></i>
+                            ${new Date(board.CreatedOn).toLocaleDateString('pt-BR')}
+                        </span>
+                    </div>
+                    <p class="board-description">${board.Description || 'Sem descrição'}</p>
+                </div>
                 <div class="board-actions">
                     <button class="btn-action btn-edit" onclick="event.stopPropagation(); editBoard(${board.Id})" title="Editar">
                         <i class="fas fa-edit"></i>
@@ -324,6 +337,49 @@ class BoardManager {
         });
 
         return boardElement;
+    }
+
+    async loadBoardStats(boardId, boardElement) {
+        try {
+            // Adiciona classe de loading enquanto carrega
+            const statsElements = boardElement.querySelectorAll('.stat-item span');
+            statsElements.forEach(el => el.classList.add('loading'));
+
+            // Busca dados em paralelo
+            const [columns, tasks] = await Promise.all([
+                apisRequest.ColumnsBoardId(boardId),
+                apisRequest.TasksByBoardId(boardId)
+            ]);
+
+            const columnCount = boardElement.querySelector('.column-count');
+            const taskCount = boardElement.querySelector('.task-count');
+
+            // Remove classe de loading
+            statsElements.forEach(el => el.classList.remove('loading'));
+
+            // Atualiza contadores apenas se os elementos existirem e os dados forem arrays
+            if (columnCount && Array.isArray(columns)) {
+                columnCount.textContent = `${columns.length} coluna${columns.length !== 1 ? 's' : ''}`;
+            }
+
+            if (taskCount && Array.isArray(tasks)) {
+                taskCount.textContent = `${tasks.length} tarefa${tasks.length !== 1 ? 's' : ''}`;
+            }
+
+            // Adiciona classes para estilização baseada na quantidade
+            if (columns.length > 0) {
+                columnCount?.parentElement.classList.add('has-items');
+            }
+            if (tasks.length > 0) {
+                taskCount?.parentElement.classList.add('has-items');
+            }
+
+        } catch (error) {
+            console.error('Erro ao carregar estatísticas do board:', error);
+            // Em caso de erro, mostra um traço
+            const stats = boardElement.querySelectorAll('.stat-item span');
+            stats.forEach(stat => stat.textContent = '-');
+        }
     }
 }
 
