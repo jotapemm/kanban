@@ -13,7 +13,7 @@
     --text-secondary: #6c757d;
     --i-hover: #ffffff;
     --border-color: #000000;
-    --btn-hover: #242323;
+    --btn-hover: #000000;
     --primary-color: #000000;
     --secondary-color: #e9ecef;
     --shadow-color: rgba(0, 0, 0, 0.1);
@@ -155,13 +155,22 @@ header {
 
 .btn-icon:hover {
     background: var(--btn-hover);
+    border-color: var(--btn-hover);
     color: var(--i-hover);
     transform: scale(1.1);
 }
 
-.btn-primary {
-    background: var(--bg-color);
-    color: var(--text-color);
+.btn-icon i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+#add-column-btn {
+    background: var(--border-color);
+    color: white;
     padding: 0.7rem;
     border: 2px solid var(--border-color);
     border-radius: 0.5rem;
@@ -173,12 +182,6 @@ header {
     position: relative;
     cursor: pointer;
     transition: var(--transition);
-}
-
-.btn-primary:hover {
-    background: var(--btn-hover);
-    color: var(--bg-color);
-    transform: scale(1.1);
 }
 
 .btn-icon i {
@@ -471,6 +474,7 @@ textarea.input-primary {
 
 .column {
     background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     width: 280px;
     min-width: 280px;
