@@ -416,9 +416,9 @@ class BoardDetailsManager {
             <h2 class="fnt-lg">Nova Coluna</h2>
             <input type="text" id="columnName" class="input-primary w-full p-sm border-md" 
                 placeholder="Nome da coluna" required>
-            <div class="flex-row gap-sm w-full">
-                <button type="submit" class="btn btn-primary w-full p-sm border-md">Criar</button>
-                <button type="button" class="btn btn-secondary w-full p-sm border-md">Cancelar</button>
+            <div id= "createColumnDiv" class="flex-row gap-sm w-full">
+                <button type="submit" id="createColumn" class="btn btn-primary w-full p-sm border-md">Criar</button>
+                <button type="button" id="cancelColumn" class="btn btn-secondary w-full p-sm border-md">Cancelar</button>
             </div>
         `;
 

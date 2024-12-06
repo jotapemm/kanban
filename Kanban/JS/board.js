@@ -54,7 +54,6 @@ class BoardManager {
             form.innerHTML = `
                 <h2 class="fnt-lg">Editar Quadro</h2>
                 <input id="name" type="text" class="input-primary w-full p-sm border-md" placeholder="Nome do quadro" value="${board.Name}" required>
-                <input id="color" type="color" class="input-primary w-full p-sm border-md" value="${board.HexaBackgroundColor || '#ffffff'}" required>
                 <textarea id="description" class="input-primary w-full p-sm border-md" placeholder="Descrição do quadro" rows="3">${board.Description || ''}</textarea>
                 <div class="flex-row gap-sm w-full">
                     <button type="submit" class="btn btn-primary w-full p-sm border-md">Salvar</button>
@@ -178,19 +177,6 @@ class BoardManager {
             </div>
 
             <div class="form-group">
-                <label class="form-label" for="color">Cor do Quadro</label>
-                <div class="color-input-wrapper">
-                    <input 
-                        id="color" 
-                        type="color" 
-                        value="#4A90E2"
-                        required
-                    >
-                    <div class="color-preview" style="background-color: #4A90E2"></div>
-                </div>
-            </div>
-
-            <div class="form-group">
                 <label class="form-label" for="description">Descrição</label>
                 <textarea 
                     id="description" 
@@ -217,13 +203,6 @@ class BoardManager {
 
         // Foca no input de nome automaticamente
         form.querySelector('#name').focus();
-
-        // Preview da cor
-        const colorInput = form.querySelector('#color');
-        const colorPreview = form.querySelector('.color-preview');
-        colorInput.addEventListener('input', (e) => {
-            colorPreview.style.backgroundColor = e.target.value;
-        });
 
         // Botão cancelar
         form.querySelector('.btn-cancel').onclick = () => {

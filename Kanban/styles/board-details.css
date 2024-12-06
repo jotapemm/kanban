@@ -5,13 +5,16 @@
     --column-gap: 1rem;
     
     /* Cores do tema claro */
-    --bg-color: #ffffff;
+    --bg-color: aliceblue;
     --bg-secondary: #f8f9fa;
     --bg-hover: #f0f0f0;
-    --text-color: #2c3e50;
+    --header-bg: #ffffff;
+    --text-color: #333333;
     --text-secondary: #6c757d;
-    --border-color: #dee2e6;
-    --primary-color: #007bff;
+    --i-hover: #ffffff;
+    --border-color: #000000;
+    --btn-hover: #242323;
+    --primary-color: #000000;
     --secondary-color: #e9ecef;
     --shadow-color: rgba(0, 0, 0, 0.1);
 }
@@ -21,10 +24,13 @@
     --bg-color: #1a1a1a;
     --bg-secondary: #2d2d2d;
     --bg-hover: #363636;
+    --header-bg: #1a1a1a;
     --text-color: #e1e1e1;
     --text-secondary: #a0a0a0;
+    --i-hover: #000000;
     --border-color: #404040;
-    --primary-color: #4dabf7;
+    --btn-hover: #ffffff;
+    --primary-color: #ffffff;
     --secondary-color: #343a40;
     --shadow-color: rgba(0, 0, 0, 0.3);
 }
@@ -71,7 +77,6 @@
     border: 1px solid var(--border-color);
 }
 
-/* Ajuste nas cores de prioridade para o tema escuro */
 [data-theme="dark"] .task-card[data-priority="1"] {
     border-left: 3px solid #6dd66d; 
 }
@@ -84,21 +89,18 @@
     border-left: 3px solid #ff6b6b;
 }
 
-/* Ajuste no backdrop do modal para o tema escuro */
 [data-theme="dark"] .modal {
     background-color: rgba(0, 0, 0, 0.7);
 }
 
-/* Melhorias nos botões para o tema escuro */
 [data-theme="dark"] .btn-primary {
-    background-color: #4dabf7;
+    background-color: #1a1a1a;
 }
 
 [data-theme="dark"] .btn-danger {
     background-color: #ff6b6b;
 }
 
-/* Ajuste nas cores do loading spinner */
 [data-theme="dark"] .loading-spinner {
     color: var(--text-secondary);
 }
@@ -113,12 +115,13 @@ body {
     font-family: Arial, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    min-height: 100vh;
+    min-height: 100dvh;
 }
 
 header {
     padding: 1rem;
-    background-color: var(--bg-color);
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
     display: flex;
     justify-content: space-between;
@@ -135,9 +138,52 @@ header {
 }
 
 .btn-icon {
-    background-color: transparent;
-    border: none;
+    background: transparent;
     color: var(--text-color);
+    padding: 0.7rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    border: 2px solid var(--border-color);   
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    transition: var(--transition);
+}
+
+.btn-icon:hover {
+    background: var(--btn-hover);
+    color: var(--i-hover);
+    transform: scale(1.1);
+}
+
+.btn-primary {
+    background: var(--bg-color);
+    color: var(--text-color);
+    padding: 0.7rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    width: 90px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background: var(--btn-hover);
+    color: var(--bg-color);
+    transform: scale(1.1);
+}
+
+.btn-icon i {
+    font-size: 1rem;
+    transition: var(--transition);
 }
 
 .header-actions {
@@ -151,6 +197,40 @@ header {
     padding: 1rem;
     overflow-x: auto;
     min-height: calc(100vh - 80px);
+}
+
+#columnName {
+    padding: 0.8rem;
+    width: 95%;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+}
+
+#createColumnDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+#createColumn {
+    display: flex;
+    justify-content: center;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    width: 50%;
+    height: auto;
+}
+
+#cancelColumn {
+    display: flex;
+    justify-content: center;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    padding: 0.8rem;
+    width: 50%;
+    height: auto;
 }
 
 .column {
@@ -234,7 +314,6 @@ header {
     color: var(--primary-color);
 }
 
-/* Estilos para Modal */
 .modal {
     position: fixed;
     top: 0;
@@ -258,7 +337,6 @@ header {
     box-shadow: var(--shadow-lg);
 }
 
-/* Estilos para Formulários */
 .form-group {
     margin-bottom: 1rem;
 }
@@ -278,20 +356,18 @@ textarea.input-primary {
     min-height: 100px;
 }
 
-/* Estilos para Prioridades */
 .task-card[data-priority="1"] {
-    border-left: 3px solid #4CAF50; /* Verde para baixa prioridade */
+    border-left: 3px solid #4CAF50;
 }
 
 .task-card[data-priority="2"] {
-    border-left: 3px solid #FFC107; /* Amarelo para média prioridade */
+    border-left: 3px solid #FFC107;
 }
 
 .task-card[data-priority="3"] {
-    border-left: 3px solid #F44336; /* Vermelho para alta prioridade */
+    border-left: 3px solid #F44336;
 }
 
-/* Animações */
 @keyframes modalSlideUp {
     from {
         opacity: 0;
@@ -314,7 +390,6 @@ textarea.input-primary {
     }
 }
 
-/* Botões */
 .btn {
     padding: 0.5rem 1rem;
     border: none;
@@ -324,10 +399,19 @@ textarea.input-primary {
 }
 
 .btn-primary {
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 4px;
-    border: none;
+    background: transparent;
+    color: var(--text-color);
+    padding: 0.7rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    width: 90px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
 .btn-secondary {
@@ -405,7 +489,6 @@ textarea.input-primary {
     margin-right: 0.5rem;
 }
 
-/* Estilos para as colunas */
 .column {
     background: var(--bg-secondary);
     border-radius: 8px;
@@ -475,7 +558,7 @@ textarea.input-primary {
 .add-task-btn {
     margin: 1rem;
     padding: 0.5rem;
-    border: 2px dashed var(--border-color);
+    border: 2px solid var(--text-secondary);
     border-radius: 6px;
     text-align: center;
     color: var(--text-secondary);
@@ -487,12 +570,12 @@ textarea.input-primary {
     background: var(--bg-hover);
     border-color: var(--primary-color);
     color: var(--primary-color);
+    transform: scale(1.1);
 }
 
-/* Estilos para tarefas concluídas */
 .task-card {
     position: relative;
-    padding-right: 2.5rem; /* Espaço para o ícone de status */
+    padding-right: 2.5rem; 
 }
 
 .task-status {
@@ -526,7 +609,6 @@ textarea.input-primary {
     color: #4CAF50;
 }
 
-/* Estilo para o checkbox personalizado no modal */
 .task-completion-status {
     margin-bottom: 1rem;
 }

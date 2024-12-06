@@ -137,8 +137,8 @@ button:active {
 }
 
 #theme-toggle:hover {
-  background: black;
-  color: var(--bg-color);
+  background-color: black;
+  color: white;
 }
 
 @keyframes fadeInUp {

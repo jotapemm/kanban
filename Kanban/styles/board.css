@@ -142,15 +142,17 @@ button:hover {
 .board-card {
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
+    flex-direction: column;  
     background-color: var(--card-bg);
     color: var(--text-color);
     transition: var(--transition);
+}
 
-    &.board-header {
-        display: flex;
-        
-    }
+.board-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
 }
 
 #boards-container {
