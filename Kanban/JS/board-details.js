@@ -1,4 +1,4 @@
-    import { ThemeManager } from './theme.js';
+import { ThemeManager } from './theme.js';
 import apisRequest from './api.js';
 
 class BoardDetailsManager {
@@ -108,9 +108,10 @@ class BoardDetailsManager {
         const placeholder = document.createElement('div');
         placeholder.classList.add('loading-placeholder');
         placeholder.innerHTML = `
-            <div class="loading-spinner">
-                <i class="fas fa-spinner fa-spin"></i>
-                <span>Carregando colunas...</span>
+            <div class="loading">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         `;
         return placeholder;
@@ -233,8 +234,8 @@ class BoardDetailsManager {
                     <option value="3">Alta</option>
                 </select>
             </div>
-            <div class="flex-row gap-sm w-full">
-                <button type="submit" class="btn btn-primary w-full p-sm border-md">Criar</button>
+            <div id="newTaskButtonsDiv" class="flex-row gap-sm w-full">
+                <button id="createTaskButton" type="submit" class="btn btn-primary w-full p-sm border-md">Criar</button>
                 <button type="button" class="btn btn-secondary w-full p-sm border-md">Cancelar</button>
             </div>
         `;
@@ -311,8 +312,8 @@ class BoardDetailsManager {
                     <option value="3" ${task.Priority === 3 ? 'selected' : ''}>Alta</option>
                 </select>
             </div>
-            <div class="flex-row gap-sm w-full">
-                <button type="submit" class="btn btn-primary w-full p-sm border-md">Salvar</button>
+            <div id="editTaskButtonsDiv" class="flex-row gap-sm w-full">
+                <button id="updateTaskButton" type="submit" class="btn btn-primary w-full p-sm border-md">Salvar</button>
                 <button type="button" class="btn btn-secondary w-full p-sm border-md">Cancelar</button>
                 <button type="button" class="btn btn-danger w-full p-sm border-md">Excluir</button>
             </div>
@@ -467,8 +468,8 @@ class BoardDetailsManager {
             <h2 class="fnt-lg">Editar Coluna</h2>
             <input type="text" id="columnName" class="input-primary w-full p-sm border-md" 
                 value="${column.Name}" placeholder="Nome da coluna" required>
-            <div class="flex-row gap-sm w-full">
-                <button type="submit" class="btn btn-primary w-full p-sm border-md">Salvar</button>
+            <div id= "editColumnDiv" class="flex-row gap-sm w-full">
+                <button id="editColumnButton" type="submit" class="btn btn-primary w-full p-sm border-md">Salvar</button>
                 <button type="button" class="btn btn-secondary w-full p-sm border-md">Cancelar</button>
             </div>
         `;

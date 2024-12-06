@@ -216,6 +216,8 @@ header {
     display: flex;
     justify-content: center;
     border: 2px solid var(--border-color);
+    background-color: var(--border-color);
+    color: white;
     border-radius: 0.5rem;
     cursor: pointer;
     width: 50%;
@@ -225,7 +227,6 @@ header {
 #cancelColumn {
     display: flex;
     justify-content: center;
-    border: 2px solid var(--border-color);
     border-radius: 0.5rem;
     cursor: pointer;
     padding: 0.8rem;
@@ -429,27 +430,6 @@ textarea.input-primary {
     transform: translateY(-1px);
 }
 
-.loading-placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 200px;
-}
-
-.loading-spinner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    color: var(--text-secondary);
-}
-
-.loading-spinner i {
-    font-size: 2rem;
-    color: var(--primary-color);
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -526,6 +506,9 @@ textarea.input-primary {
 }
 
 .column-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 0.5rem;
     border-radius: 4px;
     background: var(--bg-hover);
@@ -546,6 +529,71 @@ textarea.input-primary {
 
 .column-actions .delete-column:hover {
     background: #dc3545;
+    color: white;
+}
+
+#editColumnDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+#editColumnDiv button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 20rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+#editColumnButton {
+    background: var(--border-color);
+    color: white;
+}
+
+#taskTitle {
+    width: 95%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+}
+
+#taskDescription {
+    width: 95%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+#newTaskButtonsDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+#newTaskButtonsDiv button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 20rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+#createTaskButton {
+    background: var(--border-color);
     color: white;
 }
 
@@ -576,6 +624,29 @@ textarea.input-primary {
 .task-card {
     position: relative;
     padding-right: 2.5rem; 
+}
+
+#editTaskButtonsDiv {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+#editTaskButtonsDiv button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 20rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bolder;
+}
+
+#updateTaskButton {
+    background: var(--border-color);
+    color: white;
 }
 
 .task-status {
