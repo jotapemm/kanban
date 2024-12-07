@@ -38,13 +38,11 @@ const apiRequest = async (endpoint, method, body) => {
 };
 
 const apisRequest = {
-    // Pessoa
     People: async () => apiRequest("People", "GET"),
     PersonById: async (personId) => apiRequest(`PersonById?PersonId=${personId}`, "GET"),
     GetPrsonByEmail: async (Email) => apiRequest(`GetPersonByEmail?Email=${Email}`, "GET"),
     PersonConfigId: async (personId) => apiRequest(`PersonConfigById?PersonId=${personId}`, "GET"),
 
-    // Columns
     CreateColumn: async (column) => apiRequest("Column", "POST", column),
     UpdateColumn: async (column) => apiRequest("Column", "PUT", column),
     RemoveColumn: async (columnId) => apiRequest(`Column?ColumnId=${columnId}`, "DELETE"),
@@ -58,7 +56,6 @@ const apisRequest = {
         }
     },
 
-    // Boards
     GetBoards: async () => {
         try {
             const resp = await apiRequest("Boards", "GET");
@@ -79,12 +76,10 @@ const apisRequest = {
     AddBoard: async (board) => apiRequest("Board", "POST", board),
     editBoard: async (board) => apiRequest("Board", "PUT", board),
 
-    // Configurações
     Themes: async () => apiRequest("Themes", "GET"),
     PersonConfigTheme: async (personId, theme) => 
         apiRequest(`PersonConfigTheme?PersonId=${personId}&Theme=${theme}`, "PUT"),
 
-    // Tasks
     TasksColumnId: async (columnId) => apiRequest(`TasksByColumnId?ColumnId=${columnId}`, "GET"),
     TasksByBoardId: async (boardId) => apiRequest(`TaskByBoardId?BoardId=${boardId}`, "GET"),
     RemoveTask: async (taskId) => apiRequest(`Task?TaskId=${taskId}`, "DELETE"),

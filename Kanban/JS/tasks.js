@@ -55,7 +55,6 @@ class BoardDetailsManager {
             this.boardContainer.innerHTML = '';
             this.boardContainer.appendChild(loadingPlaceholder);
 
-            // Carrega colunas
             const columns = await apisRequest.ColumnsBoardId(this.boardId);
             this.columnsCache.clear();
             
@@ -81,7 +80,6 @@ class BoardDetailsManager {
                 tasksByColumn = await this.loadTasksByColumns(columns);
             }
 
-            // Renderiza todas as colunas
             for (const column of columns) {
                 const columnElement = this.createColumnElement(column, tasksByColumn[column.Id] || []);
                 this.boardContainer.appendChild(columnElement);
@@ -91,7 +89,6 @@ class BoardDetailsManager {
         } catch (error) {
             console.error('Erro ao carregar colunas:', error);
             this.showError('Erro ao carregar colunas');
-            // Mesmo com erro, limpa o loading
             this.boardContainer.innerHTML = `
                 <div class="error-message">
                     <i class="fas fa-exclamation-circle"></i>
@@ -140,10 +137,8 @@ class BoardDetailsManager {
             </div>
         `;
 
-        // Configurar eventos
         this.setupColumnEvents(columnDiv, column);
         
-        // Configurar eventos das tarefas
         tasks.forEach(task => {
             const taskElement = columnDiv.querySelector(`[data-task-id="${task.Id}"]`);
             if (taskElement) {
@@ -192,7 +187,6 @@ class BoardDetailsManager {
             taskElement.classList.remove('dragging');
         });
 
-        // Adiciona evento de clique no ícone de status
         const statusIcon = taskElement.querySelector('.task-status');
         if (statusIcon) {
             statusIcon.addEventListener('click', async (e) => {
@@ -201,7 +195,6 @@ class BoardDetailsManager {
             });
         }
 
-        // Mantém o evento de edição no clique do card
         taskElement.addEventListener('click', (e) => {
             if (!e.target.closest('.task-status')) {
                 this.showEditTaskModal(task);
@@ -210,7 +203,7 @@ class BoardDetailsManager {
     }
 
     showError(message) {
-        alert(message); // Implementar um sistema de notificação mais elegante
+        alert(message);
     }
 
     showAddTaskModal(columnId) {
@@ -267,7 +260,7 @@ class BoardDetailsManager {
             try {
                 await this.createTask(newTask);
                 closeModal();
-                await this.loadColumns(); // Recarrega as colunas para mostrar a nova tarefa
+                await this.loadColumns();
             } catch (error) {
                 this.showError('Erro ao criar tarefa');
                 console.error('Erro ao criar tarefa:', error);
@@ -383,11 +376,9 @@ class BoardDetailsManager {
     }
 
     showSuccess(message) {
-        // Implementação temporária
         alert(message);
     }
 
-    // Novo método para carregar tarefas por coluna individualmente
     async loadTasksByColumns(columns) {
         const tasksByColumn = {};
         
@@ -539,7 +530,7 @@ class BoardDetailsManager {
                 statusIcon.classList.toggle('fa-check-circle');
             }
 
-            // Atualiza o objeto da task no cache
+            // Atualiza o objeto da tarefa
             task.IsCompleted = updatedTask.IsCompleted;
             
             this.showSuccess(task.IsCompleted ? 'Tarefa concluída!' : 'Tarefa reaberta!');
@@ -550,5 +541,4 @@ class BoardDetailsManager {
     }
 }
 
-// Inicializar
 new BoardDetailsManager(); 

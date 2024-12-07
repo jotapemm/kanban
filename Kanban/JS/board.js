@@ -78,7 +78,6 @@ class BoardManager {
                     Id: boardId,
                     Name: form.querySelector('#name').value,
                     Description: form.querySelector('#description').value,
-                    HexaBackgroundColor: form.querySelector('#color').value,
                     IsActive: true,
                     CreatedBy: board.CreatedBy,
                     UpdatedBy: parseInt(userId)
@@ -204,7 +203,6 @@ class BoardManager {
         // Foca no input de nome automaticamente
         form.querySelector('#name').focus();
 
-        // Botão cancelar
         form.querySelector('.btn-cancel').onclick = () => {
             modal.style.animation = 'modalSlideDown 0.3s var(--elastic) forwards';
             setTimeout(() => modal.remove(), 300);
@@ -215,7 +213,6 @@ class BoardManager {
             e.preventDefault();
             await this.addNewBoard(
                 form.querySelector('#name').value,
-                form.querySelector('#color').value,
                 form.querySelector('#description').value
             );
             modal.style.animation = 'modalSlideDown 0.3s var(--elastic) forwards';
@@ -226,14 +223,12 @@ class BoardManager {
         };
     }
 
-    async addNewBoard(name, color, description) {
+    async addNewBoard(name, description) {
         try {
             const userId = localStorage.getItem('userId');
             const newBoard = {
                 Name: name,
                 Description: description,
-                HexaBackgroundColor: color,
-                IsActive: true,
                 CreatedBy: parseInt(userId),
                 UpdatedBy: parseInt(userId)
             };
@@ -260,11 +255,9 @@ class BoardManager {
             const boards = await apisRequest.GetBoards();
             this.boardsContainer.innerHTML = ''; // Limpar container
 
-            // Adicionar botão de nova board
             const addBoardButton = this.createAddBoardButton();
             this.boardsContainer.appendChild(addBoardButton);
 
-            // Adicionar boards existentes
             boards.forEach(board => {
                 const boardElement = this.createBoardElement(board);
                 this.boardsContainer.appendChild(boardElement);
@@ -309,10 +302,9 @@ class BoardManager {
             </div>
         `;
 
-        // Adicionar evento de clique para navegar para a board
         const boardCard = boardElement.querySelector('.board-card');
         boardCard.addEventListener('click', () => {
-            window.location.href = `board-details.html?id=${board.Id}`;
+            window.location.href = `tasks.html?id=${board.Id}`;
         });
 
         return boardElement;
@@ -320,11 +312,9 @@ class BoardManager {
 
     async loadBoardStats(boardId, boardElement) {
         try {
-            // Adiciona classe de loading enquanto carrega
             const statsElements = boardElement.querySelectorAll('.stat-item span');
             statsElements.forEach(el => el.classList.add('loading'));
 
-            // Busca dados em paralelo
             const [columns, tasks] = await Promise.all([
                 apisRequest.ColumnsBoardId(boardId),
                 apisRequest.TasksByBoardId(boardId)
@@ -333,10 +323,8 @@ class BoardManager {
             const columnCount = boardElement.querySelector('.column-count');
             const taskCount = boardElement.querySelector('.task-count');
 
-            // Remove classe de loading
             statsElements.forEach(el => el.classList.remove('loading'));
 
-            // Atualiza contadores apenas se os elementos existirem e os dados forem arrays
             if (columnCount && Array.isArray(columns)) {
                 columnCount.textContent = `${columns.length} coluna${columns.length !== 1 ? 's' : ''}`;
             }
@@ -345,7 +333,6 @@ class BoardManager {
                 taskCount.textContent = `${tasks.length} tarefa${tasks.length !== 1 ? 's' : ''}`;
             }
 
-            // Adiciona classes para estilização baseada na quantidade
             if (columns.length > 0) {
                 columnCount?.parentElement.classList.add('has-items');
             }
@@ -355,12 +342,10 @@ class BoardManager {
 
         } catch (error) {
             console.error('Erro ao carregar estatísticas do board:', error);
-            // Em caso de erro, mostra um traço
             const stats = boardElement.querySelectorAll('.stat-item span');
             stats.forEach(stat => stat.textContent = '-');
         }
     }
 }
 
-// Inicializar
 new BoardManager();

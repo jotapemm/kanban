@@ -1,10 +1,8 @@
-// script.js
 import apisRequest from './api.js';
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("login-form");
 
-  // Login event
   loginForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -22,38 +20,31 @@ document.addEventListener("DOMContentLoaded", () => {
       const userData = await response.json();
       localStorage.setItem("user", JSON.stringify(userData));
 
+      // tentativa de mostrar mensagem de boas vindas
       alert(`Welcome, ${userData.Name}!`);
-      // Redirect to main dashboard (not implemented yet)
       window.location.href = "board.html";
     } catch (error) {
       alert(error.message);
     }
   });
-//so pra desbugar o commit
 });
 
 document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("theme-toggle");
 
-  // Carregar tema salvo do localStorage
   const savedTheme = localStorage.getItem("theme") || "light";
   document.documentElement.setAttribute("data-theme", savedTheme);
 
-  // Atualizar texto do botão
   themeToggle.textContent = savedTheme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode";
 
-  // Alternar tema
   themeToggle.addEventListener("click", () => {
     const currentTheme = document.documentElement.getAttribute("data-theme");
     const newTheme = currentTheme === "light" ? "dark" : "light";
 
-    // Aplicar o novo tema
     document.documentElement.setAttribute("data-theme", newTheme);
 
-    // Salvar tema no localStorage
     localStorage.setItem("theme", newTheme);
 
-    // Atualizar texto do botão
     themeToggle.textContent = newTheme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode";
   });
 });

@@ -34,7 +34,6 @@ export const ThemeManager = {
         localStorage.setItem('theme', newTheme);
         this.applyTheme(newTheme);
 
-        // Atualiza a preferência no backend se houver usuário logado
         const userId = localStorage.getItem('userId');
         if (userId) {
             import('./api.js').then(({ default: apisRequest }) => {

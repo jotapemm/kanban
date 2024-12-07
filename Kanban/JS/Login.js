@@ -23,11 +23,9 @@ class LoginManager {
             const user = await apisRequest.GetPrsonByEmail(email);
             
             if (user) {
-                // Salvar dados do usuário
                 localStorage.setItem('userEmail', email);
                 localStorage.setItem('userId', user.Id);
                 
-                // Redirecionar para a página de boards
                 window.location.href = 'board.html';
             } else {
                 this.showError('Usuário não encontrado');
@@ -39,7 +37,6 @@ class LoginManager {
     }
 
     showError(message) {
-        // Criar elemento de erro se não existir
         let errorDiv = document.querySelector('.error-message');
         if (!errorDiv) {
             errorDiv = document.createElement('div');
@@ -56,6 +53,4 @@ class LoginManager {
     }
 }
 
-// Inicializar
 new LoginManager();
-
